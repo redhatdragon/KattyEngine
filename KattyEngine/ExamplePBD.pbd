@@ -1,0 +1,11 @@
+|4 4|
+[
+x x o o
+x x o o
+u u u u
+]
+{
+x: 2, lightHull
+o: 4, heavyArmor
+u: 1, reflective
+}
