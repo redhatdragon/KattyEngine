@@ -1,0 +1,5 @@
+{
+	msk: ExampleTurMSK.msk,
+	pbd: ExampleTurPBD.pbd,
+	var: ExampleTurVAR.var
+}

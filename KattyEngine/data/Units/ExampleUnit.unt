@@ -1,0 +1,25 @@
+#This is a comment.  All comments get culled before parsing
+{
+	type: "unit",
+	#w, h, fileName
+	texture: [4, 4, "exampleUnit.png"],
+	maskResolution: [4, 4],
+	mask: [
+	1, 1, 0, 0,
+	1, 1, 0, 0,
+	2, 2, 2, 2
+	],
+	#maskTypes and bodyTypes relate their indeces to the above mask.
+	maskTypes: ["command", "engine", "shield"],
+	bodyTypes: [
+	{density: 4, mass: 2, reflective: 0},
+	{density: 2, mass: 3, reflective: 0},
+	{density: 3, mass: 1, reflective: 2}
+	],
+	health: 20,
+	spead: 30,
+	turretSlots: [
+	#x, y, w, h
+	[4, 0, 1, 1]
+	]
+}
