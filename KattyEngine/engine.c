@@ -3,6 +3,9 @@
 #include "ECS.h"
 #include "JSON.h/json.h"
 #include "math/math.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 void jsonTest() {
 	const char json[] = "{\"a\" : true, \"b\" : [false, null, \"foo\"]}";
@@ -60,9 +63,38 @@ void jsonTest() {
 	/* Don't forget to free the one allocation! */
 	free(root);
 }
+struct json_object_element_s *jsonGetVariable(struct json_object_s *object, const char *variableName) {
+	unsigned int length = object->length;
+	for (unsigned int i = 0; i < length; i++) {
+		struct json_object_element_s *element = object->start;
+		struct json_string_s *name = element->name;
+		if (strcmp(name->string, variableName) == 0) {
+			return element;
+		}
+	}
+	return 0;
+}
 
-char *getJsonDataFromFile(const char *fileName) {
+void getJsonDataFromFile(const char *fileName, char *outData) {
+	getFileData(fileName, outData, 0, 1024);
+}
 
+void importUnit(struct json_object_s *object) {
+	void *ent = ECSGetNewEntity();
+	unsigned int healthID = ECSGetComponentTypeFromName("health");
+	unsigned int speedID = ECSGetComponentTypeFromName("speed");
+	struct json_object_element_s *healthVar = jsonGetVariable(object, "health");
+	struct json_object_element_s *speedVar = jsonGetVariable(object, "speed");
+	if (healthVar) {
+		char *healthStr = ((struct json_number_s*)healthVar->value->payload)->number;
+		unsigned int health = atoi(healthStr);
+		ECSAddComponentToEntity(ent, health, healthID);
+	}
+	if (speedVar) {
+		char *speedStr = ((struct json_number_s*)speedVar->value->payload)->number;
+		unsigned int speed = atoi(speedStr);
+		ECSAddComponentToEntity(ent, speed, speedID);
+	}
 }
 
 void loadLevel() {
@@ -78,5 +110,17 @@ void loadLevel() {
 	}
 	void *ent = ECSGetParentEntity(textureID, 3);
 	ECSDestroyEntity(ent);*/
-
+	for (unsigned int i = 0; i < 10; i++) {
+		char json[256 * 8] = { 0 };
+		getJsonDataFromFile("data/Units/exampleUnit2.json", json);
+		struct json_value_s *root = json_parse(json, strlen(json));
+		struct json_object_s *jsonObject = (struct json_object_s*)root->payload;
+		struct json_object_element_s *type = jsonGetVariable(jsonObject, "type");
+		if (type) {
+			const char *typeName = type->name->string;
+			if (strcmp(typeName, "unit") == 0) {
+				importUnit(jsonObject);
+			}
+		}
+	}
 }

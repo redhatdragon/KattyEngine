@@ -90,7 +90,7 @@ void drawTexture(const struct Texture *texture, int x, int y);
 void getTexture(const char *fileName, struct Texture *texture);
 void drawText(const char *str, int x, int y);
 
-bool getFileData(const char *fileName, uint8_t *dataBuffer);
+bool getFileData(const char *fileName, uint8_t *dataBuffer, uint32_t startPos, uint32_t numBytes);
 bool getFileText(const char *fileName, char *strBuffer);
 bool writeFileData(const char *fileName, uint8_t *data);
 bool writeFileText(const char *fileName, char *str);

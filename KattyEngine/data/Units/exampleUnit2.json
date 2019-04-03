@@ -1,0 +1,8 @@
+{
+	"type": "unit",
+  "texture": [ 4, 4, "exampleUnit.png" ],
+  "body":  [4, 4, 0, 0],
+	"health": 20,
+  "spead": 30,
+  "turret":  "hammer"
+}

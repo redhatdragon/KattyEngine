@@ -1,0 +1,10 @@
+{
+  "type":  "turret",
+  "ammo": "cannonBall",
+  "RPM": 60,
+  "health": 10,
+  "armor": [ 10, 1 ],
+  "range": 60
+}
+
+//Armor [density, reflectivity];
